@@ -1,31 +1,22 @@
 // app/layout.js
-import { Inter } from 'next/font/google';
-import './globals.css';
-import Script from 'next/script';
+import './globals.css'
+import { Inter } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Room Visualizer',
-  description: 'Customize your room with various items',
-};
+  description: 'Customize your room with different furniture and decor',
+}
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link 
-          rel="stylesheet" 
-          href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.css" 
-        />
+        <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
       </head>
-      <body className={inter.className}>
-        {children}
-        <Script 
-          src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js" 
-          strategy="beforeInteractive"
-        />
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
-  );
+  )
 }
