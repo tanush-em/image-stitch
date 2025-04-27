@@ -50,7 +50,7 @@ export default function Home() {
       <main className="flex flex-col lg:flex-row w-full flex-grow">
         <div className="room-visualizer-container lg:w-3/4 w-full">
           <RoomVisualizer 
-            panoramaUrl="/panorama.jpg" 
+            panoramaUrl="/final_panorama.jpg" 
             selectedItems={getSelectedItemsData()} 
           />
         </div>
