@@ -11,7 +11,18 @@ export default function RoomVisualizer({ panoramaUrl, selectedItems }) {
 
   // Initialize or update Pannellum viewer
   useEffect(() => {
-    if (!viewerContainerRef.current) return;
+    if (!viewerContainerRef.current || !panoramaUrl) return;
+    
+    // Clean up existing viewer if it exists
+    if (viewerInstanceRef.current) {
+      try {
+        viewerInstanceRef.current.destroy();
+        viewerInstanceRef.current = null;
+        setIsViewerReady(false);
+      } catch (err) {
+        console.error('Failed to destroy existing Pannellum viewer:', err);
+      }
+    }
     
     // Wait for pannellum to be available
     if (typeof window !== 'undefined' && !window.pannellum) {
@@ -28,33 +39,31 @@ export default function RoomVisualizer({ panoramaUrl, selectedItems }) {
     }
     
     function initializePannellum() {
-      // Only initialize once
-      if (!viewerInstanceRef.current) {
-        try {
-          viewerInstanceRef.current = window.pannellum.viewer(
-            viewerContainerRef.current.id,
-            {
-              type: 'equirectangular',
-              panorama: panoramaUrl,
-              autoLoad: true,
-              showControls: true,
-              hotSpotDebug: true,
-              compass: true,
-              autoRotate: -2,
-              onLoad: () => {
-                setIsViewerReady(true);
-                console.log('Pannellum viewer loaded successfully');
-              },
-              onError: (error) => {
-                console.error('Pannellum error:', error);
-                setError('Failed to load panorama image. Please check the image path.');
-              }
+      try {
+        viewerInstanceRef.current = window.pannellum.viewer(
+          viewerContainerRef.current.id,
+          {
+            type: 'equirectangular',
+            panorama: panoramaUrl,
+            autoLoad: true,
+            showControls: true,
+            hotSpotDebug: true,
+            compass: true,
+            autoRotate: -2,
+            onLoad: () => {
+              setIsViewerReady(true);
+              setError(null);
+              console.log('Pannellum viewer loaded successfully');
+            },
+            onError: (error) => {
+              console.error('Pannellum error:', error);
+              setError('Failed to load panorama image. Please check the image path.');
             }
-          );
-        } catch (err) {
-          console.error('Failed to initialize Pannellum viewer:', err);
-          setError('Failed to initialize the viewer. Please try refreshing the page.');
-        }
+          }
+        );
+      } catch (err) {
+        console.error('Failed to initialize Pannellum viewer:', err);
+        setError('Failed to initialize the viewer. Please try refreshing the page.');
       }
     }
     
