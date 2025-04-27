@@ -5,22 +5,16 @@ export const items = {
       position: { pitch: -15, yaw: 0 }, // Position in the panorama where furniture appears
       options: [
         {
-          id: "sofa-1",
-          name: "Modern Sofa",
-          imageUrl: "/items/sofa-1.png",
-          thumbnailUrl: "/thumbnails/sofa-1.jpg"
+          id: "sofa-3",
+          name: "Sectional Sofa",
+          imageUrl: "/light.png",
+          thumbnailUrl: "/light.png"
         },
         {
           id: "sofa-2",
           name: "Classic Sofa",
           imageUrl: "/items/sofa-2.png",
           thumbnailUrl: "/thumbnails/sofa-2.jpg"
-        },
-        {
-          id: "sofa-3",
-          name: "Sectional Sofa",
-          imageUrl: "/items/sofa-3.png",
-          thumbnailUrl: "/thumbnails/sofa-3.jpg"
         }
       ]
     },
@@ -31,8 +25,8 @@ export const items = {
         {
           id: "lamp-1",
           name: "Pendant Light",
-          imageUrl: "/items/lamp-1.png",
-          thumbnailUrl: "/thumbnails/lamp-1.jpg"
+          imageUrl: "/sofa.png",
+          thumbnailUrl: "/sofa.jpg"
         },
         {
           id: "lamp-2",
@@ -55,8 +49,8 @@ export const items = {
         {
           id: "art-1",
           name: "Abstract Art",
-          imageUrl: "/items/art-1.png",
-          thumbnailUrl: "/thumbnails/art-1.jpg"
+          imageUrl: "/wallart.png",
+          thumbnailUrl: "/wallart.jpg"
         },
         {
           id: "art-2",
