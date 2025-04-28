@@ -30,11 +30,33 @@ export default function Home() {
     setGeneratedImageUrl(null);
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async () => {
+    setIsLoading(true);
     setIsSubmitted(true);
-    // In a real implementation, you would call an API to generate the image
-    // For now, we'll use a placeholder image
-    setGeneratedImageUrl("/final_panorama.jpg");
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ selectedItems }),
+      });
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to generate image');
+      }
+
+      setGeneratedImageUrl(data.imageUrl);
+    } catch (error) {
+      console.error('Error generating panorama:', error);
+      alert('Failed to generate panorama. Please try again.');
+      setIsSubmitted(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Convert selected item IDs to the format needed by the visualizer
@@ -84,9 +106,10 @@ export default function Home() {
           <div className="mt-4">
             <button
               onClick={handleSubmit}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              disabled={isLoading}
+              className={`w-full text-white font-bold py-2 px-4 rounded ${isLoading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'}`}
             >
-              Generate Room Visualization
+              {isLoading ? 'Generating...' : 'Generate Room Visualization'}
             </button>
           </div>
         </div>
