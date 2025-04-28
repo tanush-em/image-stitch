@@ -7,11 +7,7 @@ import { items } from '@/data/items';
 const panoramaWidth = 1536;
 const panoramaHeight = 768;
 
-const overlaySizes = {
-  furniture: 400,
-  lighting: 150,
-  wallDecor: 300
-};
+// Sizes are now defined per item in items.js
 
 function getXY(pitch, yaw, width, height) {
   const x = ((yaw + 180) / 360) * width;
@@ -37,7 +33,7 @@ export async function POST(request) {
       if (selectedItem) {
         const { pitch, yaw } = selectedItem.position;
         const { x, y } = getXY(pitch, yaw, panoramaWidth, panoramaHeight);
-        const overlaySize = overlaySizes[category] || 200;
+        const overlaySize = selectedItem.size || 200; // Use item-specific size
         const itemPath = path.join(process.cwd(), 'public', selectedItem.imageUrl);
         
         overlays.push({
