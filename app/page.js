@@ -49,7 +49,7 @@ export default function Home() {
         throw new Error(data.error || 'Failed to generate image');
       }
 
-      setGeneratedImageUrl(data.imageUrl);
+      setGeneratedImageUrl(data.imageData);
     } catch (error) {
       console.error('Error generating panorama:', error);
       alert('Failed to generate panorama. Please try again.');

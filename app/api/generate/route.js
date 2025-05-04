@@ -44,19 +44,18 @@ export async function POST(request) {
       }
     }
 
-    // Generate unique filename based on timestamp
-    const timestamp = Date.now();
-    const outputFilename = `final_panorama_${timestamp}.jpg`;
-    const outputPath = path.join(process.cwd(), 'public', outputFilename);
-
-    // Composite all overlays
-    await compositeImage
+    // Composite all overlays and get buffer
+    const outputBuffer = await compositeImage
       .composite(overlays)
-      .toFile(outputPath);
+      .jpeg()
+      .toBuffer();
+
+    // Convert buffer to base64
+    const base64Image = outputBuffer.toString('base64');
 
     return NextResponse.json({ 
       success: true, 
-      imageUrl: `/${outputFilename}`
+      imageData: `data:image/jpeg;base64,${base64Image}`
     });
   } catch (error) {
     console.error('Error generating panorama:', error);
